@@ -145,4 +145,52 @@ public class TestSerialization
         CollectionAssert.AreEquivalent(original.Dictionary.Keys, copy.Dictionary.Keys);
         CollectionAssert.AreEquivalent(original.Dictionary.Values, copy.Dictionary.Values);
     }
+
+    [Test]
+    public void TestEnumerableWithValueTypes()
+    {
+        var path = "Tests/EnumerableWithValueTypes.xml";
+        var original = new EnumerableDataContract<int>();
+        original.List = new List<int> { 1, 2, 3, 4, 5 };
+        Serialization.SaveXml(path, original);
+        var copy = Serialization.LoadXml<EnumerableDataContract<int>>(path);
+        CollectionAssert.AreEqual(original.List, copy.List);
+    }
+
+    [Test]
+    public void TestEnumerableWithStructTypes()
+    {
+        var path = "Tests/EnumerableWithStructTypes.xml";
+        var original = new EnumerableDataContract<StructDataContract>();
+
+        original.List = new List<StructDataContract>
+        {
+            new StructDataContract { X = 1, Y = 2, Z = 3 },
+            new StructDataContract { X = 4, Y = 5, Z = 6 },
+        };
+
+        Serialization.SaveXml(path, original);
+        var copy = Serialization.LoadXml<EnumerableDataContract<StructDataContract>>(path);
+        CollectionAssert.AreEqual(original.List, copy.List);
+    }
+
+    [Test]
+    public void TestEnumerableWithObjectTypes()
+    {
+        var path = "Tests/EnumerableWithObjectTypes.xml";
+        var original = new EnumerableDataContract<ObjectDataContract>();
+
+        original.List = new List<ObjectDataContract>
+        {
+            new ObjectDataContract{ X = 1, Y = 2, Z = 3 },
+            new ObjectDataContract{ X = 4, Y = 5, Z = 6 },
+        };
+
+        Serialization.SaveXml(path, original);
+        var copy = Serialization.LoadXml<EnumerableDataContract<ObjectDataContract>>(path);
+
+        CollectionAssert.AreEqual(original.List.Select(x => x.X), copy.List.Select(x => x.X));
+        CollectionAssert.AreEqual(original.List.Select(x => x.Y), copy.List.Select(x => x.Y));
+        CollectionAssert.AreEqual(original.List.Select(x => x.Z), copy.List.Select(x => x.Z));
+    }
 }
