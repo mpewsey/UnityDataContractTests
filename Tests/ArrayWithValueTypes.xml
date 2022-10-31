@@ -1,1 +1,0 @@
-<ArrayDataContractOfint xmlns="http://schemas.datacontract.org/2004/07/" xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><Array xmlns:a="http://schemas.microsoft.com/2003/10/Serialization/Arrays"><a:int>1</a:int><a:int>2</a:int><a:int>3</a:int><a:int>4</a:int><a:int>5</a:int></Array></ArrayDataContractOfint>
